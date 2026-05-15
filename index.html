@@ -19,9 +19,33 @@
     </div>
 
     <div id="admin">
-        <h2>欢迎进入后台管理</h2>
-        <p>这里以后可以加功能：添加数据、查看记录、修改内容</p>
-        <button onclick="logout()">退出登录</button>
+       <h3>📋 订单管理列表</h3>
+<table border="1" cellpadding="8" cellspacing="0" width="100%">
+  <tr bgcolor="#eee">
+    <td>编号</td>
+    <td>姓名</td>
+    <td>电话</td>
+    <td>地址</td>
+    <td>操作</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>张三</td>
+    <td>13800138000</td>
+    <td>广东省广州市</td>
+    <td><button>删除</button></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>李四</td>
+    <td>13900139000</td>
+    <td>深圳市南山区</td>
+    <td><button>删除</button></td>
+  </tr>
+</table>
+
+<br>
+<button onclick="logout()">退出登录</button>
     </div>
 
     <script src="script.js"></script>
