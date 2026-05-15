@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的后台系统</title>
+    <style>
+        body{text-align:center;margin-top:50px;}
+        .box{width:300px;margin:0 auto;padding:20px;border:1px solid #ccc;border-radius:8px;}
+        input{width:90%;padding:10px;margin:10px 0;}
+        button{padding:10px 30px;background:#007bff;color:#fff;border:none;border-radius:5px;}
+        #admin{display:none;}
+    </style>
+</head>
+<body>
+    <div class="box" id="loginBox">
+        <h3>后台登录</h3>
+        <input type="password" id="pwd" placeholder="请输入密码">
+        <button onclick="login()">登录</button>
+    </div>
+
+    <div id="admin">
+        <h2>欢迎进入后台管理</h2>
+        <p>这里以后可以加功能：添加数据、查看记录、修改内容</p>
+        <button onclick="logout()">退出登录</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
