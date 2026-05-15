@@ -1,140 +1,89 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
+// 示例：简单的保存录入和查询逻辑
+document.addEventListener('DOMContentLoaded', function () {
+    const saveBtn = document.getElementById('saveBtn');
+    const searchBtn = document.getElementById('searchBtn');
+    const orderTableBody = document.getElementById('orderTableBody');
 
-body {
-    background-color: #f7f7f9;
-    padding: 30px;
-}
+    // 模拟订单数据
+    let orders = [];
 
-/* 顶部标题 */
-.header-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 25px;
-}
+    // 保存录入
+    saveBtn.addEventListener('click', function () {
+        const newOrder = {
+            date: document.getElementById('orderDate').value,
+            platform: document.getElementById('platformSelect').value,
+            name: document.getElementById('customerName').value,
+            phone: document.getElementById('customerPhone').value,
+            address: document.getElementById('customerAddress').value,
+            purchaseNo: document.getElementById('purchaseOrderNo').value,
+            serialNo: document.getElementById('orderSerialNo').value,
+            expressNo: document.getElementById('expressNo').value,
+            logistics: '' // 物流公司字段，可后续扩展
+        };
 
-.header-title .cart-icon {
-    font-size: 24px;
-}
+        if (!newOrder.name || !newOrder.expressNo) {
+            alert('请填写必填信息（如客户姓名、快递单号）');
+            return;
+        }
 
-.header-title h1 {
-    font-size: 28px;
-    color: #ff6600;
-    font-weight: 600;
-}
+        orders.push(newOrder);
+        renderTable(orders);
+        alert('订单已保存！');
 
-/* 通用卡片样式 */
-.card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
+        // 清空表单
+        document.querySelectorAll('.form-input').forEach(input => {
+            if (input.type !== 'date' && input.tagName !== 'SELECT') {
+                input.value = '';
+            }
+        });
+    });
 
-.card-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 17px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    color: #222;
-}
+    // 查询功能
+    searchBtn.addEventListener('click', function () {
+        const keyword = document.getElementById('searchKeyword').value.trim().toLowerCase();
+        if (!keyword) {
+            renderTable(orders);
+            return;
+        }
 
-/* 采购订单录入表单 */
-.form-row {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-}
+        const filtered = orders.filter(order => {
+            return (
+                order.name.toLowerCase().includes(keyword) ||
+                order.phone.includes(keyword) ||
+                order.address.toLowerCase().includes(keyword) ||
+                order.serialNo.includes(keyword) ||
+                order.purchaseNo.includes(keyword) ||
+                order.expressNo.includes(keyword)
+            );
+        });
 
-.form-input {
-    padding: 10px 12px;
-    border: none;
-    background-color: #f3f3f7;
-    border-radius: 6px;
-    font-size: 14px;
-    color: #333;
-    min-width: 180px;
-}
+        renderTable(filtered);
+    });
 
-.form-input:focus {
-    outline: 1px solid #007bff;
-}
+    // 渲染表格
+    function renderTable(data) {
+        orderTableBody.innerHTML = '';
+        data.forEach((order, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${order.date}</td>
+                <td>${order.serialNo}</td>
+                <td>${order.name}</td>
+                <td>${order.phone}</td>
+                <td>${order.address}</td>
+                <td>${order.expressNo}</td>
+                <td>${order.logistics}</td>
+                <td>${order.purchaseNo}</td>
+                <td>${order.platform}</td>
+                <td><button onclick="deleteOrder(${index})">删除</button></td>
+            `;
+            orderTableBody.appendChild(tr);
+        });
+    }
 
-.btn-save {
-    background-color: #1677ff;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-/* 综合查询模块 */
-.search-area {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search-input {
-    padding: 10px 12px;
-    border: none;
-    background-color: #f3f3f7;
-    border-radius: 6px;
-    font-size: 14px;
-    min-width: 200px;
-}
-
-.btn-search {
-    background-color: #1677ff;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.btn-upload {
-    background-color: #6959e0;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-/* 订单记录表格 */
-.order-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.order-table th {
-    background-color: #f3f3f7;
-    padding: 12px 8px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-}
-
-.order-table td {
-    padding: 12px 8px;
-    text-align: center;
-    font-size: 14px;
-    color: #555;
-}
+    // 删除订单（绑定到window，方便表格调用）
+    window.deleteOrder = function (index) {
+        orders.splice(index, 1);
+        renderTable(orders);
+    };
+});
