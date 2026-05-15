@@ -4,148 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHINAMALL 采购订单系统</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f7f7f9;
-            padding: 30px;
-        }
-
-        /* 顶部标题 */
-        .header-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .header-title .cart-icon {
-            font-size: 24px;
-        }
-
-        .header-title h1 {
-            font-size: 28px;
-            color: #ff6600;
-            font-weight: 600;
-        }
-
-        /* 通用卡片样式 */
-        .card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 17px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            color: #222;
-        }
-
-        /* 采购订单录入表单 */
-        .form-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .form-input {
-            padding: 10px 12px;
-            border: none;
-            background-color: #f3f3f7;
-            border-radius: 6px;
-            font-size: 14px;
-            color: #333;
-            min-width: 180px;
-        }
-
-        .form-input:focus {
-            outline: 1px solid #007bff;
-        }
-
-        .btn-save {
-            background-color: #1677ff;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* 综合查询模块 */
-        .search-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .search-input {
-            padding: 10px 12px;
-            border: none;
-            background-color: #f3f3f7;
-            border-radius: 6px;
-            font-size: 14px;
-            min-width: 200px;
-        }
-
-        .btn-search {
-            background-color: #1677ff;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .btn-upload {
-            background-color: #6959e0;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* 订单记录表格 */
-        .order-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .order-table th {
-            background-color: #f3f3f7;
-            padding: 12px 8px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .order-table td {
-            padding: 12px 8px;
-            text-align: center;
-            font-size: 14px;
-            color: #555;
-        }
-    </style>
+    <!-- 引入外部CSS文件 -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- 顶部标题 -->
@@ -161,23 +21,23 @@
             <span>采购订单录入</span>
         </div>
         <div class="form-row">
-            <input type="date" class="form-input" value="2026-05-15">
-            <select class="form-input">
-                <option>1688</option>
+            <input type="date" class="form-input" value="2026-05-15" id="orderDate">
+            <select class="form-input" id="platformSelect">
+                <option value="1688">1688</option>
             </select>
         </div>
         <div class="form-row">
-            <input type="text" class="form-input" placeholder="客户姓名">
-            <input type="text" class="form-input" placeholder="联系电话">
-            <input type="text" class="form-input" placeholder="客户地址">
+            <input type="text" class="form-input" placeholder="客户姓名" id="customerName">
+            <input type="text" class="form-input" placeholder="联系电话" id="customerPhone">
+            <input type="text" class="form-input" placeholder="客户地址" id="customerAddress">
         </div>
         <div class="form-row">
-            <input type="text" class="form-input" placeholder="采购订单号">
-            <input type="text" class="form-input" placeholder="订单序号">
-            <input type="text" class="form-input" placeholder="快递单号">
+            <input type="text" class="form-input" placeholder="采购订单号" id="purchaseOrderNo">
+            <input type="text" class="form-input" placeholder="订单序号" id="orderSerialNo">
+            <input type="text" class="form-input" placeholder="快递单号" id="expressNo">
         </div>
         <div class="form-row">
-            <button class="btn-save">保存录入</button>
+            <button class="btn-save" id="saveBtn">保存录入</button>
         </div>
     </div>
 
@@ -188,8 +48,8 @@
             <span>综合查询（姓名/电话/地址/序号/采购号/快递号）</span>
         </div>
         <div class="search-area">
-            <input type="text" class="search-input" placeholder="输入任意关键词搜索">
-            <button class="btn-search">查询</button>
+            <input type="text" class="search-input" placeholder="输入任意关键词搜索" id="searchKeyword">
+            <button class="btn-search" id="searchBtn">查询</button>
             <button class="btn-upload">上传图片绑定</button>
         </div>
     </div>
@@ -215,10 +75,13 @@
                     <th>操作</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- 数据行可以后续用JS动态添加 -->
+            <tbody id="orderTableBody">
+                <!-- 数据行由JS动态添加 -->
             </tbody>
         </table>
     </div>
+
+    <!-- 引入外部JS文件 -->
+    <script src="script.js"></script>
 </body>
 </html>
