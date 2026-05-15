@@ -3,81 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>后台管理系统</title>
+    <title>CHINAMALL 采购订单系统</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 50px auto; padding: 0 20px; }
-        .login-box { max-width: 300px; margin: 100px auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
-        input { width: 100%; padding: 8px; margin: 10px 0; box-sizing: border-box; }
-        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
-        button:hover { background: #0056b3; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #f5f5f5; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f7f7f9;
+            padding: 30px;
+        }
+
+        /* 顶部标题 */
+        .header-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .header-title .cart-icon {
+            font-size: 24px;
+        }
+
+        .header-title h1 {
+            font-size: 28px;
+            color: #ff6600;
+            font-weight: 600;
+        }
+
+        /* 通用卡片样式 */
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        /* 采购订单录入表单 */
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .form-input {
+            padding: 10px 12px;
+            border: none;
+            background-color: #f3f3f7;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #333;
+            min-width: 180px;
+        }
+
+        .form-input:focus {
+            outline: 1px solid #007bff;
+        }
+
+        .btn-save {
+            background-color: #1677ff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* 综合查询模块 */
+        .search-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-input {
+            padding: 10px 12px;
+            border: none;
+            background-color: #f3f3f7;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 200px;
+        }
+
+        .btn-search {
+            background-color: #1677ff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-upload {
+            background-color: #6959e0;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* 订单记录表格 */
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .order-table th {
+            background-color: #f3f3f7;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .order-table td {
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
-    <!-- 登录页 -->
-    <div id="login">
-        <div class="login-box">
-            <h2>管理员登录</h2>
-            <input type="text" id="username" placeholder="用户名">
-            <input type="password" id="password" placeholder="密码">
-            <button onclick="login()">登录</button>
+    <!-- 顶部标题 -->
+    <div class="header-title">
+        <span class="cart-icon">🛒</span>
+        <h1>CHINAMALL</h1>
+    </div>
+
+    <!-- 采购订单录入 -->
+    <div class="card">
+        <div class="card-title">
+            <span>📝</span>
+            <span>采购订单录入</span>
+        </div>
+        <div class="form-row">
+            <input type="date" class="form-input" value="2026-05-15">
+            <select class="form-input">
+                <option>1688</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <input type="text" class="form-input" placeholder="客户姓名">
+            <input type="text" class="form-input" placeholder="联系电话">
+            <input type="text" class="form-input" placeholder="客户地址">
+        </div>
+        <div class="form-row">
+            <input type="text" class="form-input" placeholder="采购订单号">
+            <input type="text" class="form-input" placeholder="订单序号">
+            <input type="text" class="form-input" placeholder="快递单号">
+        </div>
+        <div class="form-row">
+            <button class="btn-save">保存录入</button>
         </div>
     </div>
 
-    <!-- 后台管理页 -->
-    <div id="admin" style="display: none;">
-        <h3>📋 订单管理列表</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>编号</th>
-              <th>姓名</th>
-              <th>电话</th>
-              <th>地址</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>张三</td>
-              <td>13800138000</td>
-              <td>广东省广州市天河区</td>
-              <td><button onclick="deleteOrder(this)">删除</button></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>李四</td>
-              <td>13900139000</td>
-              <td>深圳市南山区科技园</td>
-              <td><button onclick="deleteOrder(this)">删除</button></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>王五</td>
-              <td>13700137000</td>
-              <td>杭州市西湖区</td>
-              <td><button onclick="deleteOrder(this)">删除</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <br>
-        <button onclick="logout()">退出登录</button>
+    <!-- 综合查询 -->
+    <div class="card">
+        <div class="card-title">
+            <span>🔍</span>
+            <span>综合查询（姓名/电话/地址/序号/采购号/快递号）</span>
+        </div>
+        <div class="search-area">
+            <input type="text" class="search-input" placeholder="输入任意关键词搜索">
+            <button class="btn-search">查询</button>
+            <button class="btn-upload">上传图片绑定</button>
+        </div>
     </div>
 
-    <script>
-        function login() {
-            const user = document.getElementById('username').value;
-            const pwd = document.getElementById('password').value;
-            if(user === 'admin' && pwd === '123456') {
-                document.getElementById('login').style.display = 'none';
-                document.getElementById('admin').style.display = 'block';
-            } else {
-                alert('用户名或密码错误');
-            }
-        }
-        function logout() {
-            document.getElementById('login').style.display = 'block';
-            document.getElementById('admin').style.display = 'none';
+    <!-- 全部订单记录 -->
+    <div class="card">
+        <div class="card-title">
+            <span>📋</span>
+            <span>全部订单记录</span>
+        </div>
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>电话</th>
+                    <th>地址</th>
+                    <th>快递单号</th>
+                    <th>物流公司</th>
+                    <th>采购单号</th>
+                    <th>采购平台</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 数据行可以后续用JS动态添加 -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
